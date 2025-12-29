@@ -1,13 +1,20 @@
 from ai_engine import Summarizer
+from utils import extract_text_from_pdf
 
 if __name__ == "__main__":
-    text = """
-    Artificial Intelligence is a branch of computer science
-    that aims to create intelligent machines that work and
-    react like humans. Some of the activities computers with
-    artificial intelligence are designed for include speech
-    recognition, learning, planning, and problem solving.
-    """
-
     summarizer = Summarizer()
-    print(summarizer.summarize(text))
+
+    file_path = "data/sample.pdf"  # change as needed
+
+    if file_path.endswith(".pdf"):
+        text = extract_text_from_pdf(file_path)
+    else:
+        with open(file_path, "r", encoding="utf-8") as f:
+            text = f.read()
+
+    if len(text.strip()) < 50:
+        print("Input too short")
+    else:
+        summary = summarizer.summarize(text)
+        print(summary)
+
