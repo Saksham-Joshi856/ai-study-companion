@@ -1,20 +1,24 @@
-from ai_engine import Summarizer
-from utils import extract_text_from_pdf
+from fastapi import FastAPI, UploadFile, File
+from backend.ai_engine import Summarizer
+from backend.schemas import TextRequest, SummaryResponse
+from pypdf import PdfReader
 
-if __name__ == "__main__":
-    summarizer = Summarizer()
+app = FastAPI(title="AI Study Companion")
 
-    file_path = "data/sample.pdf"  # change as needed
+summarizer = Summarizer()
 
-    if file_path.endswith(".pdf"):
-        text = extract_text_from_pdf(file_path)
-    else:
-        with open(file_path, "r", encoding="utf-8") as f:
-            text = f.read()
+@app.get("/")
+def root():
+    return {"status": "AI Study Companion running 🚀"}
 
-    if len(text.strip()) < 50:
-        print("Input too short")
-    else:
-        summary = summarizer.summarize(text)
-        print(summary)
+@app.post("/summarize-text", response_model=SummaryResponse)
+def summarize_text(request: TextRequest):
+    summary = summarizer.summarize(request.text)
+    return {"summary": summary}
 
+@app.post("/summarize-pdf", response_model=SummaryResponse)
+def summarize_pdf(file: UploadFile = File(...)):
+    reader = PdfReader(file.file)
+    text = " ".join(page.extract_text() for page in reader.pages)
+    summary = summarizer.summarize(text)
+    return {"summary": summary}
