@@ -1,12 +1,31 @@
-# AI Study Companion
+#  AI Study Companion
 
-An AI-powered study assistant that summarizes notes, generates questions,
-and explains topics in simple language using Python and NLP.
+AI Study Companion is a backend-focused project that provides "AI-powered text and PDF summarization" using modern NLP models.  
+It is designed to help students quickly understand large study materials such as notes, articles, and PDFs.
 
-## Tech Stack
-- Python
-- AI / NLP
-- Git & GitHub
+---
 
-## Status
-🚧 In Development
+##  Features
+
+-  AI-powered text summarization
+-  PDF upload and automatic summarization
+-  FastAPI backend with REST APIs
+-  Swagger (OpenAPI) documentation
+-  Clean, scalable Python project structure
+-  Built with industry-grade tools
+
+---
+
+##  Tech Stack
+
+- Language: Python
+- Backend Framework: FastAPI
+- AI Model: `facebook/bart-large-cnn` (Hugging Face Transformers)
+- PDF Processing: pypdf
+- Server: Uvicorn
+- Version Control: Git & GitHub
+
+---
+
+##  Project Structure
+
