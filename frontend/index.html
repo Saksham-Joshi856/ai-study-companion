@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>AI Study Companion</title>
+    <link rel="stylesheet" href="style.css" />
+</head>
+
+<body>
+    <div class="container">
+        <h1>📘 AI Study Companion</h1>
+
+        <input type="file" id="pdfFile" accept=".pdf" />
+        <button onclick="uploadPDF()">Summarize</button>
+
+        <div id="loader" class="hidden">⏳ Summarizing...</div>
+
+        <div id="output"></div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+
+</html>
