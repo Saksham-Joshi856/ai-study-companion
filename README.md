@@ -7,12 +7,11 @@ It is designed to help students quickly understand large study materials such as
 
 ##  Features
 
--  AI-powered text summarization
--  PDF upload and automatic summarization
--  FastAPI backend with REST APIs
--  Swagger (OpenAPI) documentation
--  Clean, scalable Python project structure
--  Built with industry-grade tools
+- Upload and summarize large PDF documents
+- Chunk-based processing for long texts
+- Hierarchical AI summarization for concise outputs
+- FastAPI backend with interactive Swagger UI
+- Built using HuggingFace Transformers (BART)
 
 ---
 
@@ -26,6 +25,13 @@ It is designed to help students quickly understand large study materials such as
 - Version Control: Git & GitHub
 
 ---
+
+## 🧠 How it Works
+
+1. Extracts text from uploaded PDF
+2. Splits text into overlapping chunks
+3. Summarizes each chunk using an NLP model
+4. Generates a final concise summary
 
 ##  Project Structure
 
