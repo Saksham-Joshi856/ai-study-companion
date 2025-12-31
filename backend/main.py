@@ -3,9 +3,18 @@ from backend.ai_engine.summarizer import Summarizer
 from backend.utils.pdf_reader import extract_text_from_pdf
 from backend.utils.chunking import chunk_text
 import tempfile
+from fastapi.middleware.cors import CORSMiddleware
+
+
 
 app = FastAPI(title="AI Study Companion")
 
+app.add_middleware(
+    CORSMiddleware,
+    allow_origins=["*"],
+    allow_methods=["*"],
+    allow_headers=["*"],
+)
 summarizer = Summarizer()
 
 @app.get("/")
