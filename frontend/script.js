@@ -20,6 +20,12 @@ async function uploadPDF() {
             body: formData,
         });
 
+        if (!response.ok) {
+            const err = await response.text();
+            console.error(err);
+            throw new Error("Backend error");
+        }
+
         const data = await response.json();
         output.innerText = data.summary;
     } catch (error) {

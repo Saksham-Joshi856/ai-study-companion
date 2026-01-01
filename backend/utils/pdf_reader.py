@@ -1,11 +1,10 @@
-import PyPDF2
+from PyPDF2 import PdfReader
 
-def extract_text_from_pdf(file_path: str) -> str:
+def extract_text_from_pdf(file):
+    reader = PdfReader(file.file)  # 👈 THIS IS CRITICAL
     text = ""
 
-    with open(file_path, "rb") as file:
-        reader = PyPDF2.PdfReader(file)
-        for page in reader.pages:
-            text += page.extract_text() or ""
+    for page in reader.pages:
+        text += page.extract_text() or ""
 
     return text
