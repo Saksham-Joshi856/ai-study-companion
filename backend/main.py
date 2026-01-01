@@ -25,18 +25,17 @@ def root():
 @app.post("/summarize-pdf")
 async def summarize_pdf(file: UploadFile = File(...)):
     text = extract_text_from_pdf(file)
-
-    if not text:
-        return {"error": "No text found in PDF"}
-
     chunks = chunk_text(text)
 
-    summaries = []
+    # LEVEL 1
+    chunk_summaries = []
     for chunk in chunks:
-        summary = summarizer.summarize_text(chunk)
-        summaries.append(summary)
+        chunk_summaries.append(
+            summarizer.summarize_chunk(chunk)
+        )
 
-    final_summary = " ".join(summaries)
+    # LEVEL 2 (Step 1.4)
+    final_summary = summarizer.final_summary(chunk_summaries)
 
     return {
         "summary": final_summary
