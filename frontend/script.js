@@ -35,3 +35,14 @@ async function uploadPDF() {
 
     loader.classList.add("hidden");
 }
+
+function formatSummary(text) {
+    return text
+        .replace(/OVERVIEW:/g, "<h2>Overview</h2>")
+        .replace(/KEY CONCEPTS:/g, "<h2>Key Concepts</h2>")
+        .replace(/FINAL TAKEAWAY:/g, "<h2>Final Takeaway</h2>")
+        .replace(/- (.*)/g, "<li>$1</li>")
+        .replace(/\n<li>/g, "<ul><li>")
+        .replace(/<\/li>\n(?!<li>)/g, "</li></ul>")
+        .replace(/\n/g, "<br>");
+}

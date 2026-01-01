@@ -41,3 +41,25 @@ button:hover {
 .hidden {
     display: none;
 }
+
+.output-box {
+    background: #f9fafb;
+    padding: 20px;
+    margin-top: 20px;
+    border-radius: 10px;
+    line-height: 1.6;
+    font-family: system-ui, sans-serif;
+}
+
+.output-box h2 {
+    margin-top: 20px;
+    color: #1f2937;
+}
+
+.output-box ul {
+    margin-left: 20px;
+}
+
+.output-box li {
+    margin-bottom: 8px;
+}
