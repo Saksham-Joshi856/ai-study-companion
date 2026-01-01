@@ -88,8 +88,8 @@ class Summarizer:
 
     
     def summarize_chunk(self, text: str) -> str:
-        if not text or len(text.strip()) < 50:
-            return ""
+        if not text or len(text.strip()) < 200:
+            return text  # 🔥 skip model call
 
         return self.model(
             text,
@@ -98,6 +98,7 @@ class Summarizer:
             do_sample=False,
             truncation=True
         )[0]["summary_text"]
+
 
     def remove_duplicates(self, summaries: list[str]) -> list[str]:
         unique = []
