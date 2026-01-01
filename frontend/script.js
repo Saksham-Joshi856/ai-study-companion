@@ -2,6 +2,7 @@ async function uploadPDF() {
     const fileInput = document.getElementById("pdfFile");
     const output = document.getElementById("output");
     const loader = document.getElementById("loader");
+    const mode = document.getElementById("mode").value;
 
     if (!fileInput.files.length) {
         alert("Please select a PDF file.");
@@ -9,7 +10,7 @@ async function uploadPDF() {
     }
 
     const formData = new FormData();
-    formData.append("file", fileInput.files[0]);
+    formData.append("mode", mode);
 
     loader.classList.remove("hidden");
     output.innerHTML = "";

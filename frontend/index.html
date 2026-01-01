@@ -12,6 +12,12 @@
         <h1>📘 AI Study Companion</h1>
 
         <input type="file" id="pdfFile" accept=".pdf" />
+        <select id="mode">
+            <option value="quick">⚡ Quick</option>
+            <option value="study" selected>📘 Study</option>
+            <option value="deep">🧠 Deep</option>
+        </select>
+
         <button onclick="uploadPDF()">Summarize</button>
 
         <div id="loader" class="hidden">⏳ Summarizing...</div>

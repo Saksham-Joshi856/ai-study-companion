@@ -1,5 +1,54 @@
 from transformers import pipeline
 
+SUMMARY_MODES = {
+    "quick": {
+        "prompt": """
+You are an expert assistant.
+Give a VERY short and crisp summary.
+Focus only on the core idea.
+Avoid details.
+
+Notes:
+{text}
+""",
+        "max_length": 120,
+        "min_length": 50
+    },
+
+    "study": {
+        "prompt": """
+You are a study assistant.
+Create well-structured study notes.
+Focus on key concepts and clarity.
+Avoid repetition.
+
+Format:
+OVERVIEW:
+KEY CONCEPTS:
+FINAL TAKEAWAY:
+
+Notes:
+{text}
+""",
+        "max_length": 250,
+        "min_length": 120
+    },
+
+    "deep": {
+        "prompt": """
+You are a teacher explaining to a student.
+Explain concepts clearly and in detail.
+Use simple language and examples.
+
+Notes:
+{text}
+""",
+        "max_length": 400,
+        "min_length": 200
+    }
+}
+
+
 FINAL_PROMPT = """
 You are an expert study assistant.
 
@@ -63,22 +112,23 @@ class Summarizer:
         return unique
 
     
-    def final_summary(self, chunk_summaries: list[str]) -> str:
-        """
-        Takes list of chunk summaries and produces one final summary
-        """
-        unique_summaries = self.remove_duplicates(chunk_summaries)
+    def final_summary(self, chunk_summaries: list[str], mode: str = "study") -> str:
+        if mode not in SUMMARY_MODES:
+            mode = "study"
 
+        unique_summaries = self.remove_duplicates(chunk_summaries)
         combined_text = "\n".join(unique_summaries)
 
-        prompt = FINAL_PROMPT.format(text=combined_text)
+        mode_config = SUMMARY_MODES[mode]
+        prompt = mode_config["prompt"].format(text=combined_text)
 
         result = self.model(
             prompt,
-            max_length=250,
-            min_length=120,
+            max_length=mode_config["max_length"],
+            min_length=mode_config["min_length"],
             do_sample=False,
             truncation=True
         )
 
         return result[0]["summary_text"]
+

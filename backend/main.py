@@ -1,5 +1,6 @@
-from fastapi import FastAPI, UploadFile, File
+from fastapi import FastAPI, UploadFile, File , Form
 from fastapi.middleware.cors import CORSMiddleware
+
 
 from backend.ai_engine.summarizer import Summarizer
 from backend.utils.pdf_reader import extract_text_from_pdf
@@ -22,21 +23,24 @@ def root():
     return {"status": "running"}
 
 
+
 @app.post("/summarize-pdf")
-async def summarize_pdf(file: UploadFile = File(...)):
+async def summarize_pdf(
+    file: UploadFile = File(...),
+    mode: str = Form("study")
+):
     text = extract_text_from_pdf(file)
     chunks = chunk_text(text)
 
-    # LEVEL 1
     chunk_summaries = []
     for chunk in chunks:
         chunk_summaries.append(
             summarizer.summarize_chunk(chunk)
         )
 
-    # LEVEL 2 (Step 1.4)
-    final_summary = summarizer.final_summary(chunk_summaries)
+    final_summary = summarizer.final_summary(chunk_summaries, mode)
 
     return {
+        "mode": mode,
         "summary": final_summary
     }
