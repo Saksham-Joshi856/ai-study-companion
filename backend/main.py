@@ -2,9 +2,9 @@ from fastapi import FastAPI, UploadFile, File , Form
 from fastapi.middleware.cors import CORSMiddleware
 
 
-from backend.ai_engine.summarizer import Summarizer
-from backend.utils.pdf_reader import extract_text_from_pdf
-from backend.utils.chunking import chunk_text
+from ai_engine.summarizer import Summarizer
+from utils.pdf_reader import extract_text_from_pdf
+from utils.chunking import chunk_text
 
 app = FastAPI(title="AI Study Companion")
 
