@@ -89,7 +89,7 @@ class Summarizer:
     
     def summarize_chunk(self, text: str) -> str:
         if not text or len(text.strip()) < 200:
-            return text  # 🔥 skip model call
+            return ""  # 🔥 skip model call
 
         return self.model(
             text,
@@ -116,6 +116,11 @@ class Summarizer:
     def final_summary(self, chunk_summaries: list[str], mode: str = "study") -> str:
         if mode not in SUMMARY_MODES:
             mode = "study"
+
+        cleaned = [s for s in chunk_summaries if s.strip()]
+
+        if not cleaned:
+            return "Unable to generate summary. PDF content may be too short."
 
         unique_summaries = self.remove_duplicates(chunk_summaries)
         combined_text = "\n".join(unique_summaries)

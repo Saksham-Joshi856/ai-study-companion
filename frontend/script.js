@@ -10,7 +10,8 @@ async function uploadPDF() {
     }
 
     const formData = new FormData();
-    formData.append("mode", mode);
+    formData.append("file", fileInput.files[0]);
+    formData.append("mode", mode); // ✅ backend expects this
 
     loader.classList.remove("hidden");
     output.innerHTML = "";
@@ -21,15 +22,21 @@ async function uploadPDF() {
             body: formData,
         });
 
+        // 🔍 show backend error clearly
         if (!response.ok) {
-            const err = await response.text();
-            console.error(err);
-            throw new Error("Backend error");
+            const errText = await response.text();
+            console.error("Backend error:", errText);
+            throw new Error(errText);
         }
 
         const data = await response.json();
-        output.innerText = data.summary;
+        console.log("Backend response:", data); // 👈 DEBUG LINE
+
+        // ✅ FIX: backend returns `summary`
+        output.innerHTML = formatSummary(data.summary);
+
     } catch (error) {
+        console.error("Frontend error:", error);
         output.innerText = "❌ Error summarizing PDF.";
     }
 

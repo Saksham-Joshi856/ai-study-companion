@@ -27,7 +27,7 @@ def root():
 @app.post("/summarize-pdf")
 async def summarize_pdf(
     file: UploadFile = File(...),
-    mode: str = Form("study")
+    mode: str = Form("default")
 ):
     text = extract_text_from_pdf(file)
     chunks = chunk_text(text)
