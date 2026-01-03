@@ -27,16 +27,15 @@ def root():
 @app.post("/summarize-pdf")
 async def summarize_pdf(
     file: UploadFile = File(...),
-    mode: str = Form("default")
+    mode: str = Form("study")
 ):
     text = extract_text_from_pdf(file)
     chunks = chunk_text(text)
 
-    chunk_summaries = []
-    for chunk in chunks:
-        chunk_summaries.append(
-            summarizer.summarize_chunk(chunk)
-        )
+    if not chunks:
+        return {"mode": mode, "summary": "PDF text extraction failed."}
+
+    chunk_summaries = summarizer.summarize_chunks(chunks)
 
     final_summary = summarizer.final_summary(chunk_summaries, mode)
 

@@ -14,6 +14,7 @@ async function uploadPDF() {
     formData.append("mode", mode); // ✅ backend expects this
 
     loader.classList.remove("hidden");
+    loader.innerText = "Analyzing PDF...";
     output.innerHTML = "";
 
     try {
@@ -30,6 +31,7 @@ async function uploadPDF() {
         }
 
         const data = await response.json();
+        loader.innerText = "Generating summary...";
         console.log("Backend response:", data); // 👈 DEBUG LINE
 
         // ✅ FIX: backend returns `summary`
